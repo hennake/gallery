@@ -1,0 +1,562 @@
+---
+title: "aRt Gallery"
+author: "Henna Kettunen"
+date: "2019-02-26"
+output:
+  html_document:
+    highlight: textmate
+    theme: cosmo
+    toc: true
+    toc_float: 
+      collapse: false
+      smooth_scroll: false
+    toc_depth: 2
+    fig_caption: true
+    fig_width: 7
+    fig_height: 7
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+This is a gallery for random pieces of aRt I created with R.
+
+
+## Circles of Hearts
+
+```{r ch, echo=TRUE, warning=FALSE, error=FALSE, message=FALSE, fig.width=6.5, fig.height=7}
+lim <- 12
+
+# Draw a leaflet
+oxalis <- function(x0, y0, rad, col) {
+  x <- seq(-lim, lim, by = 0.001)
+  y1 <- 4 / 5 * (sqrt(abs(x-x0)) + sqrt(1 - (x-x0) ^ 2)) + 0.8 + y0
+  y2 <- 4 / 5 * (sqrt(abs(x-x0)) - sqrt(1 - (x-x0) ^ 2)) + 0.8 + y0
+  xn1 <- x * cos(rad * pi) - y1 * sin(rad * pi)
+  xn2 <- x * cos(rad * pi) - y2 * sin(rad * pi)
+  yn1 <- x * sin(rad * pi) + y1 * cos(rad * pi)
+  yn2 <- x * sin(rad * pi) + y2 * cos(rad * pi)
+  polygon(c(xn1, xn2), c(yn1, yn2), col = col, border = col)
+}
+
+# Draw all the stuff
+plot(1, type = "n", xlim = c(-lim, lim), ylim = c(-lim, lim), axes = F, ann = F
+)
+
+for(i in 1:4) {
+  oxalis(0, 0, (i-1)/2, ifelse((-1)^i==1, "green", "greenyellow"))
+}
+
+for(i in 1:8) {
+  oxalis(0, 2, (i-1)/4, ifelse((-1)^i==1, "yellow", "orange"))
+}
+
+for(i in 1:16) {
+  oxalis(0, 4, (i-1)/8, ifelse((-1)^i==1, "red", "pink"))
+}
+
+for(i in 1:16) {
+  oxalis(0, 6, (i-1)/8, ifelse((-1)^i==1, "violet", "purple"))
+}
+
+for(i in 1:32) {
+  oxalis(0, 8, (i-1)/16, ifelse((-1)^i==1, "dodgerblue2", "cadetblue1"))
+}
+
+for(i in 1:32) {
+  oxalis(0, 10, (i-1)/16, ifelse((-1)^i==1, "aquamarine1", "darkturquoise"))
+}
+```
+
+
+## "Oxalis valentinensis"
+
+```{r oxalis, echo=TRUE, warning=FALSE, error=FALSE, message=FALSE, fig.width=6.5, fig.height=7}
+x <- seq(-6, 6, by = 0.001)
+y1 <- 4 / 5 * (sqrt(abs(x)) + sqrt(1 - x ^ 2)) + 0.8
+y2 <- 4 / 5 * (sqrt(abs(x)) - sqrt(1 - x ^ 2)) + 0.8
+plot(
+  1,
+  type = "n",
+  xlim = c(-2, 2),
+  ylim = c(-2, 2),
+  axes = FALSE,
+  ann = FALSE
+)
+polygon(c(x, x), c(y1, y2), col = "green", border = "green")
+
+xn1 <- x * cos(3 / 5 * pi) - y1 * sin(3 / 5 * pi)
+xn2 <- x * cos(3 / 5 * pi) - y2 * sin(3 / 5 * pi)
+yn1 <- x * sin(3 / 5 * pi) + y1 * cos(3 / 5 * pi)
+yn2 <- x * sin(3 / 5 * pi) + y2 * cos(3 / 5 * pi)
+polygon(c(xn1, xn2), c(yn1, yn2), col = "green", border = "green")
+
+xn1 <- x * cos(-3 / 5 * pi) - y1 * sin(-3 / 5 * pi)
+xn2 <- x * cos(-3 / 5 * pi) - y2 * sin(-3 / 5 * pi)
+yn1 <- x * sin(-3 / 5 * pi) + y1 * cos(-3 / 5 * pi)
+yn2 <- x * sin(-3 / 5 * pi) + y2 * cos(-3 / 5 * pi)
+polygon(c(xn1, xn2), c(yn1, yn2), col = "green", border = "green")
+
+lines(
+  x = c(0, 0),
+  y = c(0, -2),
+  col = "green",
+  lwd = 2
+)
+```
+
+
+## Flower
+
+Tested transparency, ended up with a flower
+
+
+```{r flow, echo=TRUE, warning=FALSE, error=FALSE, message=FALSE, fig.width=6.5, fig.height=7}
+library(plotrix)
+
+a <- 3/sqrt(2)
+
+mycol1 <- rgb(0, 191, 255, max = 255, alpha = 50, names = "deepskyblue")
+mycol2 <- rgb(238, 130, 238, max = 255, alpha = 50, names = "violet")
+mycol3 <- rgb(255, 255, 0, max = 255, alpha = 110, names = "yellow")
+mycol4 <- rgb(255, 0, 0, max = 255, alpha = 50, names = "red")
+
+plot(1, type="n", xlab="", ylab="", xlim=c(-6, 6), ylim=c(-6, 6), axes=F, ann=F)
+draw.circle(x=0, y=3, radius=3, border="black", col=mycol1)
+draw.circle(x=0, y=-3, radius=3, border="black", col=mycol1)
+draw.circle(x=3, y=0, radius=3, border="black", col=mycol1)
+draw.circle(x=-3, y=0, radius=3, border="black", col=mycol1)
+draw.circle(x=0, y=0, radius=5.55, border="black", col=mycol1)
+draw.circle(x=0, y=0, radius=4.25, border="black", col=mycol4)
+draw.circle(x=0, y=0, radius=2.3, border="black", col=mycol3)
+draw.circle(x=a, y=a, radius=3, border="black", col=mycol2)
+draw.circle(x=-a, y=-a, radius=3, border="black", col=mycol2)
+draw.circle(x=a, y=-a, radius=3, border="black", col=mycol2)
+draw.circle(x=-a, y=a, radius=3, border="black", col=mycol2)
+```
+
+
+## Lots of circles
+
+```{r lotta, echo=TRUE, warning=FALSE, error=FALSE, message=FALSE, fig.width=6.5, fig.height=7}
+draw.circle <- function(x0=0, y0=0, r, border) {
+  x <- seq(-1,1,by=0.0001)
+  points(x, sqrt(r^2-(x-x0)^2)+y0, type="l", col=border)
+  points(x, -sqrt(r^2-(x-x0)^2)+y0, type="l", col="black")
+}
+
+ymp <- function(n, b="black", x0=0, y0=0, radius=0.5) {
+  plot(1, type="n", xlab="", ylab="", xlim=c(-1, 1), ylim=c(-1, 1), axes=F)
+  for(i in 1:n) {
+    draw.circle(x0=0.5*cos(i*(pi/(n/2))), y0=0.5*sin(i*(pi/(n/2))), r=radius, border=b)
+  }
+}
+
+k <- 40
+ymp(n=k, b="red")
+```
+
+## Diamond
+
+```{r dia, echo=TRUE, warning=FALSE, error=FALSE, message=FALSE, fig.width=6.5, fig.height=7}
+par(col="deepskyblue")
+plot(x=c(-1,1), y=c(0,0), type="l", ann=F, axes=F)
+points(x=c(0,0), y=c(-1,1), type="l")
+
+points(x=c(-1,0), y=c(0,1), type="l")
+points(x=c(0,1), y=c(1,0), type="l")
+points(x=c(0,1), y=c(-1,0), type="l")
+points(x=c(-1,0), y=c(0,-1), type="l")
+
+points(x=c(-1,-1), y=c(-1,1), type="l")
+points(x=c(-1,1), y=c(1,1), type="l")
+points(x=c(1,1), y=c(-1,1), type="l")
+points(x=c(-1,1), y=c(-1,-1), type="l")
+
+points(x=c(-1,-0.5), y=c(0,1), type="l")
+points(x=c(0.5,1), y=c(1,0), type="l")
+points(x=c(0.5,1), y=c(-1,0), type="l")
+points(x=c(-1,-0.5), y=c(0,-1), type="l")
+
+points(x=c(-1,-0.75), y=c(0,1), type="l")
+points(x=c(0.75,1), y=c(1,0), type="l")
+points(x=c(0.75,1), y=c(-1,0), type="l")
+points(x=c(-1,-0.75), y=c(0,-1), type="l")
+
+points(x=c(-1,-0.25), y=c(0,1), type="l")
+points(x=c(0.25,1), y=c(1,0), type="l")
+points(x=c(0.25,1), y=c(-1,0), type="l")
+points(x=c(-1,-0.25), y=c(0,-1), type="l")
+
+points(x=c(-0.5,0), y=c(0,1), type="l")
+points(x=c(0,0.5), y=c(1,0), type="l")
+points(x=c(0,0.5), y=c(-1,0), type="l")
+points(x=c(-0.5,0), y=c(0,-1), type="l")
+
+points(x=c(-0.75,0), y=c(0,1), type="l")
+points(x=c(0,0.75), y=c(1,0), type="l")
+points(x=c(0,0.75), y=c(-1,0), type="l")
+points(x=c(-0.75,0), y=c(0,-1), type="l")
+
+points(x=c(-0.25,0), y=c(0,1), type="l")
+points(x=c(0,0.25), y=c(1,0), type="l")
+points(x=c(0,0.25), y=c(-1,0), type="l")
+points(x=c(-0.25,0), y=c(0,-1), type="l")
+
+points(x=c(-1,0), y=c(0.5,1), type="l")
+points(x=c(0,1), y=c(1,0.5), type="l")
+points(x=c(0,1), y=c(-1,-0.5), type="l")
+points(x=c(-1,0), y=c(-0.5,-1), type="l")
+
+points(x=c(-1,0), y=c(0.75,1), type="l")
+points(x=c(0,1), y=c(1,0.75), type="l")
+points(x=c(0,1), y=c(-1,-0.75), type="l")
+points(x=c(-1,0), y=c(-0.75,-1), type="l")
+
+points(x=c(-1,0), y=c(0.25,1), type="l")
+points(x=c(0,1), y=c(1,0.25), type="l")
+points(x=c(0,1), y=c(-1,-0.25), type="l")
+points(x=c(-1,0), y=c(-0.25,-1), type="l")
+
+points(x=c(-1,0), y=c(0,0.5), type="l")
+points(x=c(-1,0), y=c(0,0.25), type="l")
+points(x=c(-1,0), y=c(0,0.75), type="l")
+
+points(x=c(1,0), y=c(0,0.5), type="l")
+points(x=c(1,0), y=c(0,0.25), type="l")
+points(x=c(1,0), y=c(0,0.75), type="l")
+
+points(x=c(-1,0), y=c(0,-0.5), type="l")
+points(x=c(-1,0), y=c(0,-0.25), type="l")
+points(x=c(-1,0), y=c(0,-0.75), type="l")
+
+points(x=c(1,0), y=c(0,-0.5), type="l")
+points(x=c(1,0), y=c(0,-0.25), type="l")
+points(x=c(1,0), y=c(0,-0.75), type="l")
+```
+
+
+## Heart Curves
+
+```{r hc, echo=TRUE, warning=FALSE, error=FALSE, message=FALSE}
+hyvaaYstavanpaivaa <- function(n) {
+  
+  require(RColorBrewer)
+  
+  if(n > 30 | n < 1) {
+    cat("Anna 0 < n < 31")
+  }
+  
+  else {
+    
+    h <- colorRampPalette(brewer.pal(9, "Reds"))(n)
+    xmax <- sqrt(0.5 * n) + 0.5
+    ymin <- -sqrt(0.5 * n) - 0.5
+    ymax <- sqrt(0.5 * n) + 1
+    
+    plot(x=0, 
+         y=0, 
+         type="l", 
+         lwd=1, 
+         col="white", 
+         xlim=c(-xmax, xmax), 
+         ylim=c(ymin, ymax), 
+         xlab="Me", 
+         ylab="You", 
+         main="Happy Valentine's Day!")
+    
+    for(i in 1:n) {
+      
+      x1 <- seq(0, xmax, by=0.0001)
+      x <- c(0 - x1, x1)
+      x <- unique(x)
+      x <- x[order(x)]
+      y1 <- sqrt(abs(x)) + sqrt(0.5 * i - x^2)
+      y2 <- sqrt(abs(x)) - sqrt(0.5 * i - x^2)
+      points(x, y1, type="l", lwd=1, col=h[i])
+      points(x, y2, type="l", lwd=1, col=h[i])
+      
+    }
+  }
+}
+
+hyvaaYstavanpaivaa(30)
+```
+
+
+## Star
+
+A blog post on building this (only in Finnish, sorry!): 
+http://www.r-ohjelmointi.org/?p=3065
+
+```{r star, echo=TRUE, warning=FALSE, error=FALSE, message=FALSE}
+rotx <- function(x, y, a=0) {
+  zx <- x * cos(a) - y * sin(a)
+  return(zx)
+}
+
+roty <- function(x, y, a=0) {
+  zy <- x * sin(a) + y * cos(a)
+  return(zy)
+}
+
+
+# Mittasuhteet
+a <- 1                                   # katon sivu
+b <- 1.355 * a                           # seinä
+h <- b + (1/sqrt(2)) * a                 # korkeus 
+k <- h - b                               # katon korkeus
+c <- sqrt(2) * a                         # pohja
+
+# Kahden talon kappale
+pala1 <- function(x, y, angle, color) {
+  
+  # Lähtökoordinaatit
+  x2 <- x - 0.5 * c
+  x4 <- x + 0.5 * c
+  x9 <- x - c
+  y2 <- y - k
+  y3 <- y - h
+  y6 <- y - 2* h
+  y7 <- y - h - b
+  px1 <- c(x, x2, x2, x4, x4)
+  py1 <- c(y, y2, y3, y3, y2)
+  px2 <- c(x2, x, x, x9, x9)
+  py2 <- c(y6, y7, y3, y3, y7)
+  
+  # Kierretyt koordinaatit
+  rx1 <- rotx(px1, py1, a=angle)
+  ry1 <- roty(px1, py1, a=angle)
+  rx2 <- rotx(px2, py2, a=angle)
+  ry2 <- roty(px2, py2, a=angle)
+  rx3 <- rotx(-px1, py1, a=angle)
+  ry3 <- roty(-px1, py1, a=angle)
+  rx4 <- rotx(-px2, py2, a=angle)
+  ry4 <- roty(-px2, py2, a=angle)
+  
+  # Kaksi palaa ja peilikuvat
+  polygon(rx1, ry1, col=color)
+  polygon(rx2, ry2, col=color)
+  polygon(rx3, ry3, col=color)
+  polygon(rx4, ry4, col=color)
+  
+}
+
+# Yhden talon kappale
+pala2 <- function(x, y, angle, color) {
+  
+  # Lähtökoordinaatit
+  x2 <- x - 0.5 * c
+  x4 <- x + 0.5 * c
+  y2 <- y - k
+  y3 <- y - h
+  px1 <- c(x, x2, x2, x4, x4)
+  py1 <- c(y, y2, y3, y3, y2)
+  
+  # Kierretyt koordinaatit
+  rx1 <- rotx(px1, py1, a=angle)
+  ry1 <- roty(px1, py1, a=angle)
+  rx2 <- rotx(-px1, py1, a=angle)
+  ry2 <- roty(-px1, py1, a=angle)
+  
+  # Talo ja peilikuva
+  polygon(rx1, ry1, col=color)
+  polygon(rx2, ry2, col=color)
+  
+}  
+
+tahti <- function(r, col) {
+  
+  # Riittävän pitkä värivektori
+  col1 <- rep(col, (r %/% length(col)) * length(col) + 1)
+  
+  # Tyhjä kuva
+  par(mar=c(0.5,0.5,0.5,0.5))
+  plot(0, 0, pch=4, xlim=c(-(r+1)*h-r*b,(r+1)*h+r*b), ylim=c((-(r+1)*h-r*b),(r+1)*h+r*b),
+       bty="n", axes=F, xlab=NA, ylab=NA, main=NA, sub=NA, asp=1)
+  
+  # Kulmat (45 asteen välein)
+  ang <- c(0:3 * pi/2, seq(1, 7, by=2) * pi/4) 
+  
+  # Kerrosten 0 ja 1 x-koordinaattien alustus
+  x0 <- c(0,-0.5*c,-0.5*c,0.5*c,0.5*c)
+  x1 <- 0
+  
+  # Kerros 0
+  for(j in 1:8) {
+    col2 <- ifelse(j %in% 1:4, col1[1], col1[2])
+    y0 <- if(j %in% 1:4) c(0,k,h,h,k) else c(0,k,h,h,k) + a
+    polygon(x=rotx(x0, y0, ang[j]), y=roty(x0, y0, ang[j]), col=col2)
+  }
+  
+  # Kerros 1
+  for(j in 1:8) {
+    col2 <- ifelse(j %in% 1:4, col1[2], col1[3])
+    y1 <- ifelse(j %in% 1:4, 2 * h, 2 * h + a)
+    pala2(x=x1, y=y1, angle=ang[j], color=col2)
+  }
+  
+  # Kerrokset 2 - r
+  if(r > 1) { 
+    
+    # Kerrosten läpikäynti
+    for(i in 2:r) {
+      
+      # Kerroksen ylin kärkikoordinaatti
+      x <- 0
+      y <- (i + 1) * h + (i - 1) * b
+      
+      # Parittomien kerrosten alin palikka
+      if(i %% 2 != 0) {
+        
+        ux <- x - (i - 1) * 0.5 * c
+        
+        for(j in 1:8) {
+          col3 <- ifelse(j %in% 1:4, col1[i+1], col1[i+2])
+          uy <- if(j %in% 1:4) y - 0.5 * (i - 1) * (h + b) else y - 0.5 * (i - 1) * (h + b) + 1
+          pala2(ux, uy, angle=ang[j], color=col3)
+          
+        }
+      }
+      
+      # Loput palikat
+      for(j in 1:(i %/% 2)) { 
+        
+        # Palikan ylimmän kärkipisteen x-koordinaatti
+        px <- x - (j - 1) * c
+        
+        # Piirretään sakara kerrallaan
+        for(l in 1:8) { 
+          col4 <- ifelse(l %in% 1:4, col1[i+1], col1[i+2])
+          py <- if(l %in% 1:4) y - (j - 1) * (h + b) else y - (j - 1) * (h + b) + a
+          pala1(px, py, angle=ang[l], color=col4)
+          
+        }
+      }
+    }    
+  }
+}
+
+rainbow <- c("white","pink","red","orange","yellow","green","cyan","blue","violet")
+tahti(18, rainbow)
+```
+
+
+## Pixelated Pikachu
+
+Inspired by my early attempts in pixelated art with Win 3.1 and Paintbrush back in the '90s.
+
+```{r pika, echo=TRUE, warning=FALSE, error=FALSE, message=FALSE}
+# Kuvan alustus
+
+# Tyhjä matriisi
+a <- matrix(NA, ncol=28, nrow=24)
+
+# Matriisin täyttöfunktio
+pos <- function(color, row, col1, col2) {
+  p <- c(NA,NA,NA)
+  p[1] <- row
+  p[2] <- col1
+  p[3] <- col2
+  a[p[1], c(p[2]:p[3],(29-p[2]):(29-p[3]))] <- color
+  a
+}
+
+# Täytteet
+color <- "yellow"
+a <- pos(color,3,4,4)
+a <- pos(color,4,4,5)
+a <- pos(color,5,4,7)
+a <- pos(color,6,4,8)
+a <- pos(color,7,4,14)
+a <- pos(color,8,4,14)
+a <- pos(color,9,5,14)
+a <- pos(color,10,6,14)
+a <- pos(color,11,7,14)
+a <- pos(color,12,7,14)
+a <- pos(color,13,6,14)
+a <- pos(color,14,6,14)
+a <- pos(color,15,6,14)
+a <- pos(color,16,6,14)
+a <- pos(color,17,5,14)
+a <- pos(color,18,5,14)
+a <- pos(color,19,5,14)
+a <- pos(color,20,6,14)
+a <- pos(color,21,7,14)
+a <- pos(color,22,9,14)
+a <- pos(color,23,12,14)
+color <- "black"
+a <- pos(color,1,1,2)
+a <- pos(color,2,1,4)
+a <- pos(color,3,1,3)
+a <- pos(color,3,5,5)
+a <- pos(color,4,1,3)
+a <- pos(color,4,6,7)
+a <- pos(color,5,2,3)
+a <- pos(color,5,8,8)
+a <- pos(color,6,2,3)
+a <- pos(color,6,9,10)
+a <- pos(color,6,13,14)
+a <- pos(color,7,3,3)
+a <- pos(color,7,11,12)
+a <- pos(color,8,3,3)
+a <- pos(color,9,4,4)
+a <- pos(color,10,5,5)
+a <- pos(color,10,7,7)
+a <- pos(color,11,6,6)
+a <- pos(color,12,6,6)
+a <- pos(color,13,5,5)
+a <- pos(color,14,5,5)
+a <- pos(color,15,5,5)
+a <- pos(color,16,5,5)
+a <- pos(color,17,4,4)
+a <- pos(color,18,4,4)
+a <- pos(color,19,4,4)
+a <- pos(color,20,5,5)
+a <- pos(color,21,6,6)
+a <- pos(color,22,7,8)
+a <- pos(color,23,9,11)
+a <- pos(color,24,12,14)
+a <- pos(color,13,9,10)
+a <- pos(color,14,8,11)
+a <- pos(color,15,8,11)
+a <- pos(color,16,9,10)
+a <- pos(color,16,14,14)
+a <- pos(color,18,12,12)
+a <- pos(color,18,14,14)
+a <- pos(color,19,13,14)
+a <- pos(color,20,13,14)
+a <- pos(color,21,13,14)
+a <- pos(color,22,14,14)
+color <- "red"
+a <- pos(color,17,7,8)
+a <- pos(color,18,6,9)
+a <- pos(color,19,6,9)
+a <- pos(color,20,7,8)
+a <- pos(color,20,14,14)
+a <- pos(color,21,14,14)
+color <- "white"
+a <- pos(color,14,9,9)
+a[is.na(a)] <- "white"
+
+# Pikselifunktio
+pixelate <- function(a) {
+  
+  plot(1,1,xlim=c(0,ncol(a)-2),ylim=c(-0.1,nrow(a)-1.9),pch="", xaxt="n", yaxt="n", xlab="", ylab="")
+  
+  for(c in 1:ncol(a)) {
+    for(r in 1:nrow(a)) {
+      cc <- ncol(a) - c
+      rr <- nrow(a) - r
+      polygon(x=c(cc-1,cc-1,cc,cc), y=c(rr-1,rr,rr,rr-1), col=a[r,c])
+    }
+  }
+  
+}
+
+# Mitä lie sieltä tulee?
+pixelate(a)
+```
