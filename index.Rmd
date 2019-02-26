@@ -306,7 +306,7 @@ roty <- function(x, y, a=0) {
 
 # Mittasuhteet
 a <- 1                                   # katon sivu
-b <- 1.355 * a                           # seinä
+b <- 1.355 * a                           # seina
 h <- b + (1/sqrt(2)) * a                 # korkeus 
 k <- h - b                               # katon korkeus
 c <- sqrt(2) * a                         # pohja
@@ -314,7 +314,7 @@ c <- sqrt(2) * a                         # pohja
 # Kahden talon kappale
 pala1 <- function(x, y, angle, color) {
   
-  # Lähtökoordinaatit
+  # Lahtokoordinaatit
   x2 <- x - 0.5 * c
   x4 <- x + 0.5 * c
   x9 <- x - c
@@ -348,7 +348,7 @@ pala1 <- function(x, y, angle, color) {
 # Yhden talon kappale
 pala2 <- function(x, y, angle, color) {
   
-  # Lähtökoordinaatit
+  # Lahtokoordinaatit
   x2 <- x - 0.5 * c
   x4 <- x + 0.5 * c
   y2 <- y - k
@@ -370,15 +370,15 @@ pala2 <- function(x, y, angle, color) {
 
 tahti <- function(r, col) {
   
-  # Riittävän pitkä värivektori
+  # Riittavan pitka varivektori
   col1 <- rep(col, (r %/% length(col)) * length(col) + 1)
   
-  # Tyhjä kuva
+  # Tyhja kuva
   par(mar=c(0.5,0.5,0.5,0.5))
   plot(0, 0, pch=4, xlim=c(-(r+1)*h-r*b,(r+1)*h+r*b), ylim=c((-(r+1)*h-r*b),(r+1)*h+r*b),
        bty="n", axes=F, xlab=NA, ylab=NA, main=NA, sub=NA, asp=1)
   
-  # Kulmat (45 asteen välein)
+  # Kulmat (45 asteen valein)
   ang <- c(0:3 * pi/2, seq(1, 7, by=2) * pi/4) 
   
   # Kerrosten 0 ja 1 x-koordinaattien alustus
@@ -402,10 +402,10 @@ tahti <- function(r, col) {
   # Kerrokset 2 - r
   if(r > 1) { 
     
-    # Kerrosten läpikäynti
+    # Kerrosten lapikaynti
     for(i in 2:r) {
       
-      # Kerroksen ylin kärkikoordinaatti
+      # Kerroksen ylin karkikoordinaatti
       x <- 0
       y <- (i + 1) * h + (i - 1) * b
       
@@ -425,10 +425,10 @@ tahti <- function(r, col) {
       # Loput palikat
       for(j in 1:(i %/% 2)) { 
         
-        # Palikan ylimmän kärkipisteen x-koordinaatti
+        # Palikan ylimman karkipisteen x-koordinaatti
         px <- x - (j - 1) * c
         
-        # Piirretään sakara kerrallaan
+        # Piirretaan sakara kerrallaan
         for(l in 1:8) { 
           col4 <- ifelse(l %in% 1:4, col1[i+1], col1[i+2])
           py <- if(l %in% 1:4) y - (j - 1) * (h + b) else y - (j - 1) * (h + b) + a
@@ -452,10 +452,10 @@ Inspired by my early attempts in pixelated art with Win 3.1 and Paintbrush back 
 ```{r pika, echo=TRUE, warning=FALSE, error=FALSE, message=FALSE}
 # Kuvan alustus
 
-# Tyhjä matriisi
+# Tyhja matriisi
 a <- matrix(NA, ncol=28, nrow=24)
 
-# Matriisin täyttöfunktio
+# Matriisin tayttofunktio
 pos <- function(color, row, col1, col2) {
   p <- c(NA,NA,NA)
   p[1] <- row
@@ -465,7 +465,7 @@ pos <- function(color, row, col1, col2) {
   a
 }
 
-# Täytteet
+# Taytteet
 color <- "yellow"
 a <- pos(color,3,4,4)
 a <- pos(color,4,4,5)
@@ -557,6 +557,6 @@ pixelate <- function(a) {
   
 }
 
-# Mitä lie sieltä tulee?
+# Mita lie sielta tulee?
 pixelate(a)
 ```
