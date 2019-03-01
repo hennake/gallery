@@ -25,6 +25,54 @@ knitr::opts_chunk$set(echo = TRUE)
 This is a gallery for random pieces of aRt I created with R.
 
 
+## Fern Fractal
+
+I was told I should have a fractal here, so here we go. It's a Dryopteris fern.
+
+```{r fern, echo=TRUE, warning=FALSE, error=FALSE, message=FALSE, fig.width=6.5, fig.height=7}
+
+# Barnsley's Fern
+
+# Code from https://en.wikipedia.org/wiki/Barnsley_fern
+
+# create function of the probability and the current point
+fractal_fern2 <- function(x, p){
+  if (p <= 0.02) {
+    m <- matrix(c(0, 0, 0, 0.25), 2, 2)
+    f <- c(0, -0.14)
+  } else if (p <= 0.86) {
+    m <- matrix(c(0.85, 0.02, -0.02, 0.83), 2, 2)
+    f <- c(0, 1)
+  } else if (p <= 0.93) {
+    m <- matrix(c(0.09, -0.28, 0.3, 0.11), 2, 2)
+    f <- c(0, 0.6)
+  } else {
+    m <- matrix(c(-0.09, -0.28, -0.3, 0.09), 2, 2)
+    f <- c(0, 0.7)
+  }
+  m %*% x + f
+}
+
+# how many reps determines how detailed the fern will be
+reps <- 100000
+
+# create a vector with probability values, and a matrix to store coordinates
+p <- runif(reps)
+
+# initialise a point at the origin
+coords <- c(0, 0)
+
+# compute Fractal Coordinates
+m <- Reduce(fractal_fern2, p, accumulate = T, init = coords)
+m <- t(do.call(cbind, m))
+
+# Create plot
+plot(m, type = "p", cex = 0.1, col = "#6ca81d",
+     xlim = c(-3, 3), ylim = c(0, 6), 
+     xlab = NA, ylab = NA, axes = FALSE)
+```
+
+
 ## Circles of Hearts
 
 ```{r ch, echo=TRUE, warning=FALSE, error=FALSE, message=FALSE, fig.width=6.5, fig.height=7}
