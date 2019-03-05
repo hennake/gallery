@@ -1,7 +1,7 @@
 ---
 title: "aRt Gallery"
 author: "Henna Kettunen"
-date: "2019-02-26"
+date: 2019-03-05
 output:
   html_document:
     highlight: textmate
@@ -23,6 +23,28 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 This is a gallery for random pieces of aRt I created with R.
+
+
+## Accidental aRt
+
+A wrong sign in a wrong place turns out like aRt
+
+```{r acc, echo=TRUE, warning=FALSE, error=FALSE, message=FALSE, fig.width=6.5, fig.height=7}
+plot(1, type="n", xlab="", ylab="", xlim=c(-1, 1), ylim=c(-1, 1))
+x <- seq(-1,1,by=0.0001)
+y1 <- sqrt(0.5^2-(x-0.5)^2)+0
+y2 <- sqrt(0.5^2+(x-0.5)^2)+0
+points(x, y1, type="l", col="deepskyblue")
+for(i in 1:46) {
+  rad <- i * 1/23
+  xn1 <- x * cos(rad * pi) - y1 * sin(rad * pi)
+  xn2 <- x * cos(rad * pi) - y2 * sin(rad * pi)
+  yn1 <- x * sin(rad * pi) + y1 * cos(rad * pi)
+  yn2 <- x * sin(rad * pi) + y2 * cos(rad * pi)
+  points(xn1, yn1, type="l", col="deepskyblue")
+  points(xn2, yn2, type="l", col="blue")
+}
+```
 
 
 ## Fern Fractal
