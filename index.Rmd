@@ -22,8 +22,27 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-This is a gallery for random pieces of aRt I created with R.
+This is a gallery for random pieces of aRt I have created with R.
 
+
+## Spiral
+
+```{r spiral, echo=TRUE, warning=FALSE, error=FALSE, message=FALSE, fig.width=6.5, fig.height=7}
+library(RColorBrewer)
+k <- 50
+h <- colorRampPalette(brewer.pal(9, "Oranges"))(k/2+5)
+h2 <- c(h[5:length(h)], h[length(h):5])
+plot(1, type="n", xlab="", ylab="", xlim=c(-1, 1), ylim=c(-1, 1), axes=F)
+x <- seq(-1,1,by=0.0001)
+y1 <- sqrt(0.5^2-(x-0.5)^2)+0
+points(x, y1, type="l")
+for(i in 1:50) {
+  rad <- i * 1/25
+  xn1 <- x * cos(rad * pi) - y1 * sin(rad * pi)
+  yn1 <- x * sin(rad * pi) + y1 * cos(rad * pi)
+  points(xn1, yn1, type="l", col=h2[i])
+}
+```
 
 ## Accidental aRt
 
